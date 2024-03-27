@@ -1,0 +1,12 @@
+[requires]
+eigen/3.4.0
+sophus/1.22.10
+onetbb/2021.10.0
+tsl-robin-map/1.2.2
+
+[layout]
+cmake_layout
+
+[generators]
+CMakeDeps
+CMakeToolchain
