@@ -14,5 +14,6 @@ test:
 	@pytest -rA --verbose ./python/
 
 cpp:
-	@cmake -Bbuild cpp/kiss_icp/
+	@pip install conan
+	@cmake cpp/kiss_icp/ -B build -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES=cmake/conan_provider.cmake
 	@cmake --build build -j$(nproc --all)

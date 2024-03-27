@@ -45,8 +45,12 @@ set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-include(3rdparty/find_dependencies.cmake)
 include(cmake/CompilerOptions.cmake)
+
+find_package(Eigen3 REQUIRED)
+find_package(Sophus REQUIRED)
+find_package(TBB REQUIRED)
+find_package(tsl-robin-map REQUIRED)
 
 add_subdirectory(core)
 add_subdirectory(metrics)
