@@ -44,13 +44,14 @@ class VelodynePcapLoader:
 
         assert os.path.isfile(data_dir), "Velodyne pcap dataloader expects an existing PCAP file"
 
+        self.data_dir = data_dir
         # we expect `data_dir` param to be a path to the .pcap file, so rename for clarity
         self._pcap_file = str(data_dir)
 
-        print("Pre-reading Velodyne pcap to count the scans number ...")
+        print("Pre-reading Velodyne pcap to count the number of scans ...")
         self._timestamps = np.array([stamp.device for stamp, _ in read_pcap(self._pcap_file)])
-        # self._timestamps = (self._timestamps - self._timestamps[0]) / (self._timestamps[-1] - self._timestamps[0])
-        print(f"Velodyne pcap total scans number:  {len(self._timestamps)}")
+        self._timestamps = (self._timestamps - self._timestamps[0]) / (self._timestamps[-1] - self._timestamps[0])
+        print(f"Velodyne pcap total scans count:  {len(self._timestamps)}")
 
         self._scans_iter = read_pcap(self._pcap_file)
         self._next_idx = 0
