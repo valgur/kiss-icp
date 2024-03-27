@@ -40,9 +40,7 @@ class VelodynePcapLoader:
         except ImportError as e:
             if e.name == "velodyne_decoder":
                 print(f'velodyne_decoder is not installed on your system, run "pip install velodyne_decoder"')
-            else:
-                raise
-            exit(1)
+            raise
 
         assert os.path.isfile(data_dir), "Velodyne pcap dataloader expects an existing PCAP file"
 
@@ -79,3 +77,23 @@ class VelodynePcapLoader:
 
     def __len__(self):
         return len(self._timestamps)
+
+    @staticmethod
+    def is_velodyne_pcap(pcap_path, max_packets=100):
+        try:
+            from velodyne_decoder.util import iter_pcap, parse_packet
+            from velodyne_decoder import PACKET_SIZE
+        except ImportError as e:
+            if e.name == "velodyne_decoder":
+                print("[WARNING] Could not load velodyne_decoder to check if pcap is a Velodyne dataset")
+                return False
+            raise
+        for i, (stamp, packet) in enumerate(iter_pcap(pcap_path)):
+            if i > max_packets:
+                break
+            if len(packet) == PACKET_SIZE:
+                # Check if the return mode info is valid as a sanity check
+                dual_return_mode = parse_packet(packet)[3]
+                if dual_return_mode in [0x37, 0x38, 0x39]:
+                    return True
+        return False

@@ -32,6 +32,7 @@ from kiss_icp.datasets import (
     jumpable_dataloaders,
     sequence_dataloaders,
     supported_file_extensions,
+    velodyne,
 )
 
 
@@ -47,7 +48,10 @@ def guess_dataloader(data: Path, default_dataloader: str):
         if data.name.split(".")[-1] in "bag":
             return "rosbag", data
         if data.name.split(".")[-1] == "pcap":
-            return "ouster", data
+            if velodyne.VelodynePcapLoader.is_velodyne_pcap(data):
+                return "velodyne", data
+            else:
+                return "ouster", data
         if data.name.split(".")[-1] == "mcap":
             return "mcap", data
     elif data.is_dir():

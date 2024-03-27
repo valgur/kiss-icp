@@ -55,6 +55,7 @@ def jumpable_dataloaders():
     _jumpable_dataloaders.remove("mcap")
     _jumpable_dataloaders.remove("ouster")
     _jumpable_dataloaders.remove("rosbag")
+    _jumpable_dataloaders.remove("velodyne")
     return _jumpable_dataloaders
 
 
