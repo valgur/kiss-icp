@@ -22,4 +22,9 @@
 # SOFTWARE.
 pybind11_add_module(kiss_icp_pybind MODULE kiss_icp_pybind.cpp)
 target_link_libraries(kiss_icp_pybind PRIVATE kiss_icp::core kiss_icp::metrics)
+
+# Ensure installed runtime libraries are correctly loaded from the Python package dir by the dynamic linker.
+set_target_properties(kiss_icp_pybind PROPERTIES INSTALL_RPATH "$ORIGIN")
+
 install(TARGETS kiss_icp_pybind DESTINATION .)
+install(DIRECTORY ${CMAKE_BINARY_DIR}/runtime_libs/ DESTINATION .)

@@ -13,3 +13,5 @@ CMakeToolchain
 
 [options]
 */*:shared=False
+# OneTBB is always shared anyway, but set it explicitly for clarity
+onetbb/*:shared=True

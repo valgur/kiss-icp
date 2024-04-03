@@ -55,3 +55,6 @@ find_package(tsl-robin-map REQUIRED)
 add_subdirectory(core)
 add_subdirectory(metrics)
 add_subdirectory(pipeline)
+
+include(cmake/CopyRuntimeLibs.cmake)
+copy_runtime_libs(onetbb tbb)
